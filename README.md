@@ -1,21 +1,14 @@
 # SpiralSolver
 
-**TODO: Add description**
+**Solves this type of Puzzle**
+![puzzle](./puzzle.png)
 
-## Installation
+Come up with an algorithm (or function) to map each number to its cartesian coordinate. So 1 is (0,0), 14 is (2, 1), etc. 
+## Run
+`iex -S mix`
+`iex>SpiralSolver.run`
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `spiral_solver` to your list of dependencies in `mix.exs`:
+Or you can give it an integer and it will solve for that ending integer. As is it defaults to 25
 
-```elixir
-def deps do
-  [
-    {:spiral_solver, "~> 0.1.0"}
-  ]
-end
-```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/spiral_solver](https://hexdocs.pm/spiral_solver).
-
+`iex -S mix`
+`iex>SpiralSolver.run(100)`
