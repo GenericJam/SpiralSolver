@@ -5,6 +5,8 @@ defmodule SpiralSolver do
 
   @type direction :: :down | :left | :right | :up
   @type side_toggle :: :first | :second
+  @type coordinates :: {integer(), integer()}
+  @type count_to :: {non_neg_integer(), non_neg_integer()}
 
   @doc """
   Go clockwise. Start with up
@@ -16,7 +18,7 @@ defmodule SpiralSolver do
   def next_direction(:left), do: :up
 
   @doc """
-  Two sides per number bump so just toggle between first ane second
+  Two sides per number bump so just toggle between first and second
   """
   @spec next_side_toggle(side_toggle) :: side_toggle
   def next_side_toggle(:first), do: :second
@@ -32,18 +34,16 @@ defmodule SpiralSolver do
   @doc """
   Main recursive function
   """
-  @spec next_xy(
-          direction(),
-          {integer(), integer()},
-          side_toggle(),
-          integer(),
-          {integer(), integer()}
-        ) ::
-          [binary(), ...]
+  @spec next_xy(direction, coordinates, count_to, side_toggle, count_to) :: [
+          <<_::48, _::_*8>>,
+          ...
+        ]
+  # Stopping condition when {end_at, end_at}
   def next_xy(_, {x, y}, _, _, {end_at, end_at}) do
     ["#{end_at}: (#{x}, #{y})"]
   end
 
+  # End of a side when {side_count, side_count}
   def next_xy(direction, {x, y}, {side_count, side_count}, side_toggle, {count, end_at}) do
     [
       "#{count}: (#{x}, #{y})"
@@ -57,6 +57,7 @@ defmodule SpiralSolver do
     ]
   end
 
+  # Plot regular point
   def next_xy(direction, {x, y}, {side_count, side_total}, side_toggle, {count, end_at}) do
     [
       "#{count}: (#{x}, #{y})"
@@ -70,14 +71,14 @@ defmodule SpiralSolver do
     ]
   end
 
-  @spec bump_xy(direction(), {integer(), integer()}) :: {integer(), integer()}
+  @spec bump_xy(direction(), coordinates()) :: coordinates()
   def bump_xy(:up, {x, y}), do: {x, y + 1}
   def bump_xy(:down, {x, y}), do: {x, y - 1}
   def bump_xy(:left, {x, y}), do: {x - 1, y}
   def bump_xy(:right, {x, y}), do: {x + 1, y}
 
   @doc """
-  Accept the default of 25 or put in anther number for alternative results
+  Accept the default of 25 or put in another number for alternative results like 36 or 64
 
   ##Examples
   iex>SpiralSolver.run
